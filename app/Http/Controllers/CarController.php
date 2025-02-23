@@ -44,6 +44,9 @@ class CarController extends Controller
 
         // Handle picture upload
         if ($request->hasFile('picture')) {
+            if ($request->file('picture')->getSize() > 2048 * 1024) {
+                return back()->withErrors(['picture' => 'File size exceeds 2MB limit.']);
+            }
             $validated['picture'] = $this->storeImage($request->file('picture'));
         }
 
@@ -68,6 +71,9 @@ class CarController extends Controller
 
         // Handle picture upload if present
         if ($request->hasFile('picture')) {
+            if ($request->file('picture')->getSize() > 2048 * 1024) {
+                return back()->withErrors(['picture' => 'File size exceeds 2MB limit.']);
+            }
             if ($car->picture) {
                 Storage::disk('public')->delete($car->picture);
             }

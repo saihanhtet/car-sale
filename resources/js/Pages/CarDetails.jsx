@@ -1,6 +1,6 @@
 import { Button } from '@/Components/Button';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { router, useForm, usePage } from '@inertiajs/react';
+import { Link, router, useForm, usePage } from '@inertiajs/react';
 import { MoveLeft } from 'lucide-react';
 import { useState } from 'react';
 
@@ -11,7 +11,7 @@ const CarDetailsPage = ({ canLogin, canRegister, isLoggedIn }) => {
 
     const { data, setData, post, errors } = useForm({
         car_id: car?.id || '',
-        user_id: user.id || '',
+        user_id: user?.id || '',
         date: '',
         amount: '',
     });
@@ -66,9 +66,13 @@ const CarDetailsPage = ({ canLogin, canRegister, isLoggedIn }) => {
                         <p className="text-gray-700 mt-4"><strong>Description:</strong></p>
                         <p className="text-gray-600">{car.description || 'No description available.'}</p>
 
+                        {!user && (
+                            <Link href={route('login')}>
+                                <Button>Please Log in first!</Button>
+                            </Link>
+                        )}
 
-
-                        {user && !isOwner && bidable ? (
+                        {!isOwner && bidable ? (
                             <div className="mt-6 flex gap-2">
                                 <Button
                                     className="md:max-w-[250px] w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold uppercase p-2 rounded"

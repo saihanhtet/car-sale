@@ -29,6 +29,7 @@ class BidController extends Controller
     {
         $validated = $request->validate([
             'car_id' => 'required|exists:cars,id',
+            'date' => 'nullable|date',
             'amount' => 'required|numeric|min:1',
         ]);
 
